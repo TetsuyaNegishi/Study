@@ -26,3 +26,32 @@ $ geth --datadir ~/Study/ethereum/data_testnet/ account new
 
 $ geth --datadir ~/Study/ethereum/data_testnet/ account list
 ```
+
+Etherbase(マイニング成功時にEtherを受け取るアカウント)の確認と切り替え
+
+```
+> eth.coinbase
+"0xb7beaf06361c07bb4603e09fff3685ee532e346b"
+> miner.setEtherbase(eth.accounts[1])
+true
+> eth.coinbase
+"0x4b6deb79710234efd6ef279a14de9820fa941ac4"
+> miner.setEtherbase(eth.accounts[0])
+true
+> eth.coinbase
+"0xb7beaf06361c07bb4603e09fff3685ee532e346b"
+```
+
+残高確認
+
+```
+> eth.getBalance(eth.accounts[0])
+0
+```
+
+ブロックチェーンのブロック数確認
+
+```
+> eth.blockNumber
+0
+```
