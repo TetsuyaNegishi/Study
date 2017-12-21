@@ -55,3 +55,29 @@ true
 > eth.blockNumber
 0
 ```
+
+マイニングの実行
+
+```
+> miner.start(1)  // 引数はマイニングを行うスレッド数
+null
+> eth.mining
+true
+```
+
+マイニングの停止
+
+```
+> miner.stop()
+true
+> eth.mining
+false
+```
+
+残高確認
+```
+> eth.getBalance(eth.coinbase) // wei単位
+2.578e+22
+> web3.fromWei(eth.getBalance(eth.coinbase)) // ether単位
+25780
+```
