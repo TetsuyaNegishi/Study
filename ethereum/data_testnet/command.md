@@ -75,9 +75,98 @@ false
 ```
 
 残高確認
+
 ```
 > eth.getBalance(eth.coinbase) // wei単位
 2.578e+22
 > web3.fromWei(eth.getBalance(eth.coinbase)) // ether単位
 25780
+```
+
+アカウントのアンロック
+
+```
+> personal.unlockAccount(eth.accounts[0])
+Unlock account 0xb7beaf06361c07bb4603e09fff3685ee532e346b
+Passphrase:
+true
+```
+
+トランザクションの発行(トランザクションを発行しただけでは送金されない → マイニングでブロックに含められる必要がある)
+
+```
+> eth.sendTransaction({from: eth.accounts[0], to: eth.accounts[1], value: web3.toWei(10,"ether") })
+"0x4caf132e8dc3abeb7ecb57995caec60439170177cc34faf509d6bbc48467be21"
+> eth.getBalance(eth.accounts[1])
+0
+> eth.getTransaction("0x4caf132e8dc3abeb7ecb57995caec60439170177cc34faf509d6bbc48467be21")
+{
+  blockHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+  blockNumber: null,
+  from: "0xb7beaf06361c07bb4603e09fff3685ee532e346b",
+  gas: 90000,
+  gasPrice: 18000000000,
+  hash: "0x4caf132e8dc3abeb7ecb57995caec60439170177cc34faf509d6bbc48467be21",
+  input: "0x",
+  nonce: 0,
+  r: "0xe4ce992edc83f0d6fe33f6805e7580115e84d67db75183236ebf3650275f3b7e",
+  s: "0x5c7faa24a1bb35911ddb5bd6c72762f14f334d614fff6ecf9aa14d94dd6fc2b8",
+  to: "0x4b6deb79710234efd6ef279a14de9820fa941ac4",
+  transactionIndex: 0,
+  v: "0x1c",
+  value: 10000000000000000000
+}
+```
+
+ペンディング(保留)のトランザクションの確認
+
+```
+> eth.pendingTransactions
+[{
+    blockHash: null,
+    blockNumber: null,
+    from: "0xb7beaf06361c07bb4603e09fff3685ee532e346b",
+    gas: 90000,
+    gasPrice: 18000000000,
+    hash: "0x4caf132e8dc3abeb7ecb57995caec60439170177cc34faf509d6bbc48467be21",
+    input: "0x",
+    nonce: 0,
+    r: "0xe4ce992edc83f0d6fe33f6805e7580115e84d67db75183236ebf3650275f3b7e",
+    s: "0x5c7faa24a1bb35911ddb5bd6c72762f14f334d614fff6ecf9aa14d94dd6fc2b8",
+    to: "0x4b6deb79710234efd6ef279a14de9820fa941ac4",
+    transactionIndex: 0,
+    v: "0x1c",
+    value: 10000000000000000000
+}]
+```
+
+マイニング後のトランザクションの確認(blockHash, blockNumberに値が入る)
+
+```
+> eth.getTransaction("0x4caf132e8dc3abeb7ecb57995caec60439170177cc34faf509d6bbc48467be21")
+{
+  blockHash: "0xdd2ba15b45eb60128953f9c524d6d9bd040cfe64d8f120b84981b71da749af90",
+  blockNumber: 5157,
+  from: "0xb7beaf06361c07bb4603e09fff3685ee532e346b",
+  gas: 90000,
+  gasPrice: 18000000000,
+  hash: "0x4caf132e8dc3abeb7ecb57995caec60439170177cc34faf509d6bbc48467be21",
+  input: "0x",
+  nonce: 0,
+  r: "0xe4ce992edc83f0d6fe33f6805e7580115e84d67db75183236ebf3650275f3b7e",
+  s: "0x5c7faa24a1bb35911ddb5bd6c72762f14f334d614fff6ecf9aa14d94dd6fc2b8",
+  to: "0x4b6deb79710234efd6ef279a14de9820fa941ac4",
+  transactionIndex: 0,
+  v: "0x1c",
+  value: 10000000000000000000
+}
+```
+
+送金の確認
+
+```
+> eth.getBalance(eth.accounts[1])
+10000000000000000000
+> web3.fromWei(eth.getBalance(eth.accounts[1]))
+10
 ```
