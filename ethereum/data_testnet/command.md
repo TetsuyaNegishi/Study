@@ -170,3 +170,20 @@ true
 > web3.fromWei(eth.getBalance(eth.accounts[1]))
 10
 ```
+
+トランザクションの手数料(accounts[1]の残高が少ない → マイニングをしたアカウントに送金手数料が与えられる)
+
+```
+> eth.sendTransaction({from: eth.accounts[1] to: eth.accounts[2], value: web3.toWei(5,"ether")})
+"0x92cb0f7d2a1d5737f5d346fa09ce818f3bdcd0b1e00f19152e4f756503b1282b"
+> miner.start(1)
+
+略
+
+> eth.getBalance(eth.accounts[2])
+5000000000000000000
+> eth.getBalance(eth.accounts[1])
+4999622000000000000
+> eth.getBalance(eth.accounts[0])
+2.5835000378e+22
+```
