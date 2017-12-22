@@ -191,10 +191,16 @@ true
 別のターミナルからアクセスする
 
 ```
-$ geth --networkid 4649 --nodiscover --maxpeers 0 --datadir ~/Study/ethereum/data_testnet/ --mine --minerthreads 1 --rpc 2>> ~/Study/ethereum/data_testnet/geth.log
+$ geth --networkid 4649 --nodiscover --maxpeers 0 --datadir ~/Study/ethereum/data_testnet/ --mine --minerthreads 1 --rpc --rpcaddr "0.0.0.0" --rpcport 8545 --rpccorsdomain "*" --rpcapi "admin, db, eth, debug, miner, net, shh, txpool, personal, web3" 2>> ~/Study/ethereum/data_testnet/geth.log
 ```
 
 ```
 $ geth attach http://localhost:8545
 ```
 
+JSON-RPCでネットワークにアクセスする
+
+```
+$ curl -X POST localhost:8545 -H "Content-Type: application/json" -d '{"jxonrpc":"2.0", "method":"eth_mining", "params":[], "id":10}' // methodとparamsの値を変えるとコンソールと同じように操作できる
+{"jsonrpc":"2.0","id":10,"result":true}
+```
