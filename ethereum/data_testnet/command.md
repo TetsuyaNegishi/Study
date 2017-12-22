@@ -187,3 +187,14 @@ true
 > eth.getBalance(eth.accounts[0])
 2.5835000378e+22
 ```
+
+別のターミナルからアクセスする
+
+```
+$ geth --networkid 4649 --nodiscover --maxpeers 0 --datadir ~/Study/ethereum/data_testnet/ --mine --minerthreads 1 --rpc 2>> ~/Study/ethereum/data_testnet/geth.log
+```
+
+```
+$ geth attach http://localhost:8545
+```
+
