@@ -35,7 +35,7 @@ contract CrowdFunding {
     function fund() payable public {
         require(!ended);
 
-        Investor inv = investors[numInvestors++];
+        Investor storage inv = investors[numInvestors++];
         inv.addr = msg.sender;
         inv.amount = msg.value;
         totalAmount += inv.amount;
@@ -49,7 +49,8 @@ contract CrowdFunding {
         if(totalAmount >= goalAmount) {
             status = "Campaign Succeeded";
             ended = true;
-            if(!owner.send(this.balance)) {
+            address thisAddress = this;
+            if(!owner.send(thisAddress.balance)) {
                 revert();
             }
         } else {
